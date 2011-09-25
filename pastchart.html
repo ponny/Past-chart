@@ -1,0 +1,611 @@
+<!DOCTYPE HTML>
+<html><head>
+<title>Past Chart</title>
+<meta http-equiv="content-type" content="text/html; charset=us-ascii">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script type="text/javascript" src="http://use.typekit.com/xtt2fqm.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	<style type="text/css">
+		html,body,h1,h2,h3,h4,h5,p,ul,ol,li,form,button { margin:0; padding:0; font-size:100%; }
+		body { font:normal 93.8% arial; background:#333;padding-left:5%; }
+		a { border-bottom:1px dotted #fff; text-decoration:none; }
+
+		#fixed-bar { position:fixed; top:0; left:0; width:100%; text-align:center; z-index:9999}
+		#add { border: 1px solid #000; border-radius: 10px 10px 10px 10px; padding: 20px 0 12px; background: #141414; border-color: #000000 #333333 #333333 #000000; border-style: solid; border-width: 1px; color:#ccc; margin:0 auto; width:376px; margin-top:-10px;
+		position: relative; z-index: 100; font-size:0.73em;}
+		h1 { bottom: 0; left:0; right:0; color: #1A1A1A; font: 7em kaffeesatz, impact, tahoma, sans-serif; position: fixed; text-shadow: 2px 2px #555; text-align:center; background:#2D2D2D; z-index:9999;  border-top: 1px solid #484747; }
+		h2 { bottom: 0; color: white; font: 2em impact, tahoma; padding-bottom: 1em;} 
+
+		#timeline { position:relative; margin:120px 0 40px 0; }
+		ul.events { list-style-type: none; margin: 0; padding: 0; top:75px; position: relative; } 
+
+		ul.events li {
+			cursor: pointer; z-index:2; height: 14px; background: #eee; border: 1px solid #ddd; white-space: nowrap; color: #eee; font-size: 0.78em; font-weight: bold; margin-bottom: 1px; padding: 5px 0; position: absolute; text-align: center; background-color: #c43c35; 
+			background-repeat: repeat-x;
+			background-image: -khtml-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
+			background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
+			background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
+			background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee5f5b), color-stop(100%, #c43c35));
+			background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
+			background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
+			background-image: linear-gradient(top, #ee5f5b, #c43c35);
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ee5f5b', endColorstr='#c43c35', GradientType=0);
+			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+			border-color: #c43c35 #c43c35 #882a25;
+			border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+			-webkit-border-radius: 6px;
+			-moz-border-radius: 6px;
+			border-radius: 6px;
+			-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+			-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+			box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+		}
+
+		ul.events li.selected { box-shadow: 0 0 7px rgba(81, 203, 238, 1); -webkit-box-shadow: 0 0 7px rgba(81, 203, 238, 1); -moz-box-shadow: 0 0 7px rgba(81, 203, 238, 1); z-index: 3; } 
+
+
+		ul.events li:hover { background-position: 0 -15px; color: #fff; text-decoration: none; }  
+		ul.events li em { color: #eee; font:normal 0.8em arial; font-style:normal; } 
+		ul.intervals { list-style-type: none; padding: 0; display: block; font:bold 2em georgia; position:absolute; top:0; bottom:0; height:100%; } 
+
+
+		.hdl-r,.hdl-l { width: 5px; height: 26px; top: -1px; position: absolute; } 
+		.hdl-r {right: -1px;cursor: e-resize;} 
+		.hdl-l {left: -1px;cursor:w-resize; display: none;}
+		.delete { background-color: #C43C35; background-image: -moz-linear-gradient(center top , #EE5F5B, #C43C35); background-repeat: repeat-x; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);} 
+
+		input {
+			background-color: #444; background-color: rgba(255, 255, 255, 0.3); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: normal; font-weight: 13px; line-height: 1; padding: 4px 9px; color: #ffffff; color: rgba(255, 255, 255, 0.75); border: 1px solid #111; position:relative; top:-1px; 
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0px rgba(255, 255, 255, 0.25);
+			-moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0px rgba(255, 255, 255, 0.25);
+			box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0px rgba(255, 255, 255, 0.25);
+			-webkit-transition: none;
+			-moz-transition: none;
+			-ms-transition: none;
+			-o-transition: none;
+			transition: none;
+		}
+		/*
+		select { border: 1px solid #CCCCCC; border-radius: 3px 3px 3px 3px; color: #808080; display: inline-block; font-size: 13px; height: 18px; line-height: 18px; padding: 4px; } 
+		*/
+		#add select, #add input, button { font-size:1em; padding:1px }
+		button {
+			-moz-border-bottom-colors: none;
+			-moz-border-image: none;
+			-moz-border-left-colors: none;
+			-moz-border-right-colors: none;
+			-moz-border-top-colors: none;
+			-moz-transition: all 0.1s linear 0s;
+			border-color: #CCCCCC #CCCCCC #BBBBBB;
+			border-radius: 4px 4px 4px 4px;
+			border-style: solid;
+			border-width: 1px;
+			box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+			color: #333333;
+			cursor: pointer;
+			display: inline-block;
+			line-height: normal;
+			padding: 2px 7px 3px;
+			text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+			background-color: #0064CD;
+			background-image: -moz-linear-gradient(center top , #049CDB, #0064CD);
+			background-repeat: repeat-x;
+			border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+			color: #FFFFFF;
+			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+		}
+		button:hover { background-position: 0 -15px; color: #333333; text-decoration: none; } 
+
+		ul.events li.event1{
+			background-color: #c43c35;
+			background-repeat: repeat-x;
+			background-image: -khtml-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
+			background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
+			background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
+			background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee5f5b), color-stop(100%, #c43c35));
+			background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
+			background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
+			background-image: linear-gradient(top, #ee5f5b, #c43c35);
+		}
+		ul.events li.event2 {
+			background-color: #54c544;
+			background-repeat: repeat-x;
+			background-image: -khtml-gradient(linear, left top, left bottom, from(#2eab4f), to(#54c544));
+			background-image: -moz-linear-gradient(top, #2eab4f, #54c544);
+			background-image: -ms-linear-gradient(top, #2eab4f, #54c544);
+			background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2eab4f), color-stop(100%, #54c544));
+			background-image: -webkit-linear-gradient(top, #2eab4f, #54c544);
+			background-image: -o-linear-gradient(top, #2eab4f, #54c544);
+			background-image: linear-gradient(top, #2eab4f, #54c544);
+		}
+		ul.events li.event3 {
+			background-color: #7423ff;
+			background-repeat: repeat-x;
+			background-image: -khtml-gradient(linear, left top, left bottom, from(#5403ef), to(#7423ff));
+			background-image: -moz-linear-gradient(top, #5403ef, #7423ff);
+			background-image: -ms-linear-gradient(top, #5403ef, #7423ff);
+			background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5403ef), color-stop(100%, #7423ff));
+			background-image: -webkit-linear-gradient(top, #5403ef, #7423ff);
+			background-image: -o-linear-gradient(top, #5403ef, #7423ff);
+			background-image: linear-gradient(top, #5403ef, #7423ff);
+		}
+		ul.events li.event4 {
+			background-color: #2c8a99;
+			background-repeat: repeat-x;
+			background-image: -khtml-gradient(linear, left top, left bottom, from(#1c7a89), to(#2c8a99));
+			background-image: -moz-linear-gradient(top, #1c7a89, #2c8a99);
+			background-image: -ms-linear-gradient(top, #1c7a89, #2c8a99);
+			background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1c7a89), color-stop(100%, #2c8a99));
+			background-image: -webkit-linear-gradient(top, #1c7a89, #2c8a99);
+			background-image: -o-linear-gradient(top, #1c7a89, #2c8a99);
+			background-image: linear-gradient(top, #1c7a89, #2c8a99);
+		}
+		ul.events li.event5 {
+			background-color: #992c8a;
+			background-repeat: repeat-x;
+			background-image: -khtml-gradient(linear, left top, left bottom, from(#891c9a), to(#992c8a));
+			background-image: -moz-linear-gradient(top, #891c9a, #992c8a);
+			background-image: -ms-linear-gradient(top, #891c9a, #992c8a);
+			background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #891c9a), color-stop(100%, #992c8a));
+			background-image: -webkit-linear-gradient(top, #891c9a, #992c8a);
+			background-image: -o-linear-gradient(top, #891c9a, #992c8a);
+			background-image: linear-gradient(top, #891c9a, #992c8a);
+		}
+		ul.events li.event6 {
+			background-color: #F27C07;
+			background-repeat: repeat-x;
+			background-image: -khtml-gradient(linear, left top, left bottom, from(#E24C07), to(#F27C07));
+			background-image: -moz-linear-gradient(top, #E24C07, #F27C07);
+			background-image: -ms-linear-gradient(top, #E24C07, #F27C07);
+			background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #E24C07), color-stop(100%, #F27C07));
+			background-image: -webkit-linear-gradient(top, #E24C07, #F27C07);
+			background-image: -o-linear-gradient(top, #E24C07, #F27C07);
+			background-image: linear-gradient(top, #E24C07, #F27C07);
+		}
+		
+		ul.events li.event7 {
+			background: rgb(4,0,137); /* Old browsers */
+			background: -moz-linear-gradient(top, rgba(4,0,137,1) 0%, rgba(44,59,193,1) 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(4,0,137,1)), color-stop(100%,rgba(44,59,193,1))); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top, rgba(4,0,137,1) 0%,rgba(44,59,193,1) 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top, rgba(4,0,137,1) 0%,rgba(44,59,193,1) 100%); /* Opera11.10+ */
+			background: -ms-linear-gradient(top, rgba(4,0,137,1) 0%,rgba(44,59,193,1) 100%); /* IE10+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#040089', endColorstr='#2c3bc1',GradientType=0 ); /* IE6-9 */
+			background: linear-gradient(top, rgba(4,0,137,1) 0%,rgba(44,59,193,1) 100%); /* W3C */
+		}
+
+		ul.intervals li { border-right: 1px solid #444444; color: #0E0E0E; float: left; font-size: 1em; height: 100%; margin: 0; padding: 15px 0; text-align: center; text-shadow: 0 1px 0 #555; width: 119px; } 
+		
+		ul.intervals li:first-child { border-left: 1px solid #444; } 
+		
+		.tooltip p em { display: none } 
+
+		ul.events li.selected.tooltip p, ul.events li:hover.tooltip p { display: block; } 
+		.selected.tooltip p em, ul.events li:hover.tooltip p em, ul.events li:hover.tooltip p { display: inline-block; } 
+
+		.selected.tooltip p, .very-short p, li:hover.tooltip p { display: none; font-size: 1em; opacity: 0.8; padding: 5px; position: absolute; visibility: visible; z-index: 1000; left: -8px; top: -27px; } 
+
+		.selected.tooltip p .inner, ul.events li:hover.tooltip p .inner, .very-short p .inner { background-color: #000000; border-radius: 4px 4px 4px 4px; color: white; max-width: 200px; padding: 3px 8px; text-align: center; text-decoration: none; } 
+
+		.very-short p .arrow, .selected.tooltip p .arrow, ul.events li:hover.tooltip p .arrow { border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid #000000; bottom: -3px; left: 14px; margin-left: -5px; } 
+
+		.arrow { height: 0; position: absolute; width: 0; } 
+
+		.close { color: #fff; float: right; font-size: 1em; font-weight: bold; line-height: 13.5px; margin-top: -3px; border:0; text-decoration: none; text-shadow: 0 1px 0 #FFFFFF; } 
+
+		.selected-controls { display: none; padding-top: 0.5em; text-align: center; } 
+
+		#footer { bottom: 8em; font-size: 1em; margin-left: -5%; position: fixed; text-align: center; width: 100%; z-index: 10;} 
+		#footer a, .note, #footer p, #footer ol { color: white;}
+		#footer p { padding-bottom: 1em; font-size:1.2em;}
+		.note { display: block; padding-top: 0.3em; font-size:0.6em; color:#ccc;} 
+		#footer ol { font-size: 0.8em; text-align:left; margin:0 auto; width:192px; position: relative; padding:10px; background:#222; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; border:1px solid #000; margin-bottom:10px } 
+		#footer ol li { margin-left:17px }
+
+		#title-container { position: fixed; text-align: center; top: 80px; width: 100%; margin-left: -5%; } 
+
+		#title { font: 1em georgia, times new roman, impact, tahoma; width: 250px; text-align: center; background:#eee; color:#111; } 
+
+		#what { width:40px; }
+		#footer p.examples { font-size:0.9em; }
+		#short-url { width:80px; }
+		
+		@media screen and (max-width: 400px) { 
+			html { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }
+			body { min-width: 320px; overflow: auto; }
+			h1 { font-size:2em; position:static; }
+			.hide-for-mobile { display:none; }
+			#footer { position:static; }
+		}
+		@media screen and (min-width: 401px) and (max-width: 640px) { 
+			html { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }
+			h1 { font-size:2.5em; }
+			#footer { bottom:2.5em }
+			.hide-for-mobile { display:none; }
+		}
+		@media screen and (max-width: 520px) { 
+			h1 { font-size:3em; }
+			#footer { bottom:3.2em }
+		}
+		@media screen and (max-width: 640px) { 
+			h1 { font-size:3.5em; }
+			#footer { bottom:3.7em }
+		}
+		@media screen and (min-width: 641px) and (max-width: 960px) { 
+			h1 { font-size:4em; }
+			#footer { bottom:4.2em }
+		}
+		@media screen and (max-width: 480px) { 
+			h1 { font-size:2em; position:static;}
+			#footer { bottom:2em; position:static; }
+			.hide-for-mobile { display:none; }
+		}
+		@media screen and (min-device-width: 480px) { 
+			
+		}
+		@media screen and (min-width: 1200px) { 
+			h1 { font-size:7em; }
+			#footer { bottom:8em }
+		}
+</style></head><body>
+
+	<h1>PAST CHART</h1>
+
+	<div id="title-container">
+		<input id="title" value="Type a title, eg. Jack's stuff"/>
+	</div>
+    <div style="height: 60px;" id="timeline">
+        <ul style="height: 0px;" class="events"></ul>
+        <ul style="left: 0px; width: 1px;" class="intervals"></ul>
+    </div>
+
+	<div id="fixed-bar">
+
+		<div id="add">
+			<span class="hide-for-mobile">I did</span>
+			<input id="what" value="CSS" type="text">
+			from
+			<select id="start-month">
+			</select>
+			<select id="start-year">
+			</select>
+
+			to
+			<select id="end-month">
+
+			</select>
+			<select id="end-year">
+			</select>
+			<button class="add" title="Add"> + </button>
+			<div class="selected-controls">
+			  <button class="delete">Delete</button>
+
+			  <button class="up">Up</button>
+
+			  <button class="down">Down</button>
+			  <button class="cancel">Cancel</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="footer">
+		<ol class="hide-for-mobile">
+			<li>Create of chart of your past. <a href="#" class="close">x</a></li>
+			<li>Share the url around.</li>
+			<li>Resize bars from the right edge.</li>
+			<li>'Reset' for a clean slate.</li>
+
+		</ol>
+		<p class="examples">
+			Examples: &nbsp;
+				<a class="ex" href="#5@898@932@.net|4@817@983@CSS|2@822@882@JS|3@822@856@PHP|1@822@895@ASP 3|1@903@983@java|3@865@879@php|2@817@980@html|3@898@983@JS|Moin's paid gigs">Moin's List</a> 
+				&nbsp;
+				<a class="ex" href="#1@907@941@java%7C4@884@888@html%7C2@908@911@php%7C2@916@920@php%7C3@946@981@ruby%7C2@938@941@php%7C1@941@946@groovy%7C2@963@981@groovy%7C4@903@981@html%7C5@913@916@py%7C5@949@951@py%7C6@903@981@javascript%7C2@884@888@php%7C6@884@888@javascript%7C7@884@888@css%7C7@903@981@css%7C1@946@981@java%7C1@872@873@.net%7C4@872@873@html|John's paid gigs">John's List</a> &nbsp;
+
+				<a class="ex" href="#|Type a title, eg. Jack's stuff">Reset</a>
+
+		</p>
+		<p><button class="bit-ly">Share bit.ly link</button> <input id="short-url"><br>
+		<span class="note">Should work if our API key hasn't expired for the hour</span></p>
+
+	</div>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+<script type="text/javascript">
+	var start=1200,end=0,rows=0,d,monthWidth=10,li,ul,z,text,rowHeight=30,minYear=1930,handle=null,selected=null,right,delay=0,colours=7;
+	var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+	function numberish(n){return (!isNaN(parseInt(n) && isFinite(n))?parseInt(n):n)}
+
+	function prU(s){if(s.match(/^#?$/)){return []};return s.split('|').map(function(x) {return x.split('@').map(function(y){return numberish(decodeURIComponent(y)) })});}
+
+	function srU(data){return data.map(function(x){return x.map(function(y){ return encodeURIComponent(y)}).join("@")}).join("|") + "|" + encodeURIComponent($('#title').val());}
+
+	function hash(){return document.location.hash.replace(/^#\|?/,'')}
+
+	function parseElems(){
+		var newData = []
+		var minRow = 1000
+		$('.events li').each(function () {
+			var $this = $(this);
+			eRow = (parseInt($this.css('top'))/rowHeight)+1
+			minRow = Math.min(minRow, eRow)
+			eStart = trueStart($this)
+			eEnd = eStart + ($this.width() / monthWidth);
+			
+			newData.push([eRow,eStart,eEnd,$this.find('.t').text()])
+		})
+
+		return newData.map(function (x) { return [x[0] - (minRow - 1),x[1],x[2],x[3]]});
+	}
+
+	function trueStart($this) {
+		return $this.attr('os') - (($this.attr('ool') - $this.offset().left) / monthWidth)
+	}
+
+	function select(index) {
+		$('.selected').removeClass('selected')
+		$('.selected-controls').stop().css('height', '').css('paddingTop', '').slideDown(100)
+		$('.events li').eq(index).addClass('selected')
+		updateControls()
+	}
+
+	function unselect() {
+		$('.selected-controls').stop().css('height', '').css('paddingTop', '').slideUp(200);
+		$('.selected').removeClass('selected')
+	}
+
+	function updateControls() {
+		var $selected = $('.selected')
+		if($selected.size() > 0) {
+			var ts = trueStart($selected)
+			var te = ts + ($selected.width() / monthWidth) - 1
+			$('#start-month option').eq(ts % 12).attr('selected', 'true')
+			$('#start-year').val(Math.floor(ts/12) + minYear)
+			$('#end-month option').eq(te % 12).attr('selected', 'true')
+			$('#end-year').val(Math.floor(te/12) + minYear)
+			$('#what').val($selected.find('.t').text())
+
+			updateText($selected, ts, te + 1, $selected.find('.t').text())
+		}
+	}
+
+	function updateText($li, eStart, eEnd, eText) {
+		text = eStart==eEnd-1?shortMonth(eStart) + ' ' +shortYear(eStart):(shortMonth(eStart) + ' ' + shortYear(eStart)+' - ' + shortMonth(eEnd-1) + ' ' + shortYear(eEnd-1))
+
+		$li.html('<p><span class="arrow"></span><span class="inner"><span class="t">' +eText +'</span> <em>'+text+'</em></span></p><span class="hdl-l"></span><span class="hdl-r"></span>');
+	}
+
+	function redraw() {
+		d = prU(hash())
+		var popped = d.pop()
+		$('#title').val(popped ? popped : "Type a title, eg. Jack's stuff")
+		
+		rows = 0
+		start = 1200
+		end = 0
+		d.map(function(x){
+			start = Math.min(x[1], start)
+			end = Math.max(x[2], end)
+			rows = Math.max(x[0],rows)
+		});
+
+		ul = $('.events').css('height',rowHeight*rows).css('width', (monthWidth * (end - start)) + 2)
+		ul.html('')
+		$('#timeline').css('height',rowHeight*(rows+2))
+		var colourMap = {};
+		var colourIndex = 0;
+
+		d.map(function(t) {
+			$li = $('<li></li>');
+			$li.css({
+			  'width': ((t[2]-t[1])*monthWidth),
+			  'left': monthWidth*(t[1]-start),
+			  'top':rowHeight*(t[0]-1)
+			});
+
+			updateText($li, t[1], t[2], t[3])
+
+			ul.append($li)
+			$li.attr('os', t[1]);
+			$li.attr('ool', $li.offset().left);
+			
+			if(!(t[3] in colourMap)) {
+				colourMap[t[3]] = []
+			}
+			colourMap[t[3]].push(colourIndex++);
+		});
+
+		var $events = $('.events li')
+		colourIndex = 0
+
+		for(eventType in colourMap) {
+			for(i=0;i<colourMap[eventType].length;i++) {
+				$events.eq(colourMap[eventType][i]).addClass('event'+ ((colourIndex % colours)+1));
+			}
+			colourIndex++;
+		}
+
+		$events.each(function () {
+			$li = $(this);
+
+			if($li.width() < $li.find('p .inner').width()) {
+				$li.addClass('tooltip')
+
+
+				if($li.width() < $li.find('.t').width()) {
+					$li.addClass('very-short')
+				}
+			}
+		});
+
+		var firstYear = Math.floor(start/12) + minYear
+		var lastYear = Math.floor(end/12) + minYear
+		$('.intervals').html('').css('left', -((start % 12) * monthWidth))
+		for(var i=firstYear;i < lastYear+1;i++) {
+			$('.intervals').append('<li>'+i+'</li>')
+		}
+		$('.intervals').width((($('.intervals li').width() + 1)*$('.intervals li').size()) + 1)
+	}
+
+	function shortYear(offset){z=(Math.floor(offset/12)+minYear)%100;return "'"+(z>9?'':'0')+z}
+	function shortMonth(offset){ return months[offset%12]}
+
+	$(function () {
+		$('a.close').click(function(){$('ol').fadeOut('slow');});
+		$('.ex').click(function(e){document.location.hash=$(this).attr('href').replace(/^#/,'');redraw();e.preventDefault()})
+		redraw();
+		$(document).mousemove(function(e) {
+		  if(handle !== null) {
+			event=$('.events li').eq(handle)
+			edge=event.offset().left + event.width()
+			diff=e.pageX - edge
+
+			if(diff) {
+				event.width(Math.max(monthWidth, Math.ceil((event.width() + diff)/monthWidth)*monthWidth))
+			} else if (diff < -monthWidth) {
+				event.width(Math.max(monthWidth, Math.floor((event.width() + diff)/monthWidth)*monthWidth))
+			}
+			updateControls();
+		  }
+		});
+
+		var username = "moinzaman";
+		var key = "R_21499d34116311c3e127ae25ecb64927";
+		$('.bit-ly').click(function(){
+
+			var url = document.location.href;
+			$.ajax({
+				url:"http://api.bit.ly/v3/shorten",
+				data:{longUrl:url,apiKey:key,login:username},
+				dataType:"jsonp",
+				success:function(v)
+				{
+					$("#short-url").val(v.data.url);
+				}
+			});
+		});
+
+		$('#end-month, #start-month').each(function () {
+			var $this = $(this);
+			months.map(function (x) { $this.append("<option>"+x+"</option>")});
+			$this.find('option').eq(new Date().getMonth()).attr('selected', 'true')
+		});	
+		$('#end-year, #start-year').each(function () {
+			var $this = $(this);
+			for(i=new Date().getFullYear();i>minYear;i--) {
+				$this.append("<option>"+i+"</option>")
+			}
+		});
+		$('#start-year option').eq(1).attr('selected', 'true')
+	});
+
+	function inputChange() {
+		var $selected = $('.selected');
+		
+		var selectedIndex = null;
+		
+		if($selected.size() > 0) {
+			selectedIndex = $selected.index();
+			var i = $selected.index()
+			var selStart = ((parseInt($('#start-year').val()) - minYear)*12) + $('#start-month').find(':selected').index()
+			var selEnd = ((parseInt($('#end-year').val()) - minYear)*12) + ($('#end-month').find(':selected').index()+1)
+			$selected.css('left', monthWidth*(selStart-start))
+			$selected.width((selEnd - selStart) * monthWidth)
+			$selected.find('.t').text($('#what').val())	
+		}
+		
+		handleElementChanges()
+		
+		if(selectedIndex !== null) {
+			select(selectedIndex);
+		}
+	}
+	$('#start-month, #start-year, #end-month, #end-year').live('change', inputChange);
+	$('#what').live('change', inputChange);
+	$('#title').live('change', inputChange);
+
+	$('.hdl-r').live('mousedown',function(e) {
+		right=true
+		var index = $(this).closest('li').index()
+		select(index)
+		handle = index
+		e.preventDefault()
+	})
+
+	$('.events li').live('click', function (e) {
+		$this = $(this)
+		select($this.index())
+		e.preventDefault()
+	})
+
+	$('.selected, .intervals').live('click', function (e) {
+		unselect()
+		e.preventDefault()
+	})
+
+	$('.events').live('mouseup', function (e) {
+		if(handle != null) {
+			handle = null
+			handleElementChanges()
+		}
+	})
+
+	function handleElementChanges() {
+		window.location.hash = srU(parseElems())
+		redraw()
+	}
+
+	$('button.add').live('click', function (e) {
+		var bestRow = rows+1;
+		
+		
+		eStart = (((parseInt($('#start-year').val()) - minYear) * 12) + $('#start-month :selected').index())
+		eEnd = (((parseInt($('#end-year').val()) - minYear) * 12) + $('#end-month :selected').index() + 1)
+
+		for(var i=0;i<rows+1;i++) {
+			var rowOkay = true
+			d.map(function(x) {
+				if(x[0] === i+1 && (x[1] < eEnd && x[2] > eStart)) {
+					rowOkay = false
+				}
+			})
+
+			if(rowOkay) { bestRow = Math.min(i+1, bestRow) }
+		}
+
+		
+		if(window.location.hash === '') {
+			window.location.hash = (bestRow + '@' + eStart + '@' + eEnd + '@' + $('#what').val() + '|' + encodeURIComponent($('#title').val())).replace(/^#?\|?/g, '')
+		} else {
+			window.location.hash = (bestRow + '@' + eStart + '@' + eEnd + '@' + $('#what').val() + '|' + window.location.hash.replace(/^#?\|?/g, '')).replace(/^#?\|?/g, '')
+		}
+		
+		 
+		redraw()
+	})
+	$('button.up').live('click', function (e) {
+		$('.selected').css('top', parseInt($('.selected').css('top')) - rowHeight)
+		var selectedIndex = $('.selected').index()
+		handleElementChanges()
+		select(selectedIndex)
+	})
+	$('button.down').live('click', function (e) {
+		$('.selected').css('top', parseInt($('.selected').css('top')) + rowHeight)
+		var selectedIndex = $('.selected').index()
+		handleElementChanges()
+		select(selectedIndex)
+	})
+	$('button.delete').live('click', function (e) {
+		$('.selected').remove()
+		unselect()
+		handleElementChanges()
+	})
+	$('button.cancel').live('click', function (e) {
+		unselect()
+	})
+	$('#title').focus();
+</script>
+</body></html>
