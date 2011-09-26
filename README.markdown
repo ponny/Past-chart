@@ -4,7 +4,7 @@
 <p>You can create a simplified online resume/chart showing all the tech you've used over the years.  Extra fun with peolpe that have been in the industry for 30 years (You did COBOL for two years in the eighties?).  You can probably shoehorn it in to other uses; tweet some ideas at us.</p>
 
 <h2>Why?</h2>
-<p>This was a competition entry for <a href="http://10k.aneventapart.com/">An Event Aparts 11k competition</a>.</p>
+<p>This was a competition entry for <a href="http://10k.aneventapart.com/">An Event Apart 10k competition</a>. In fact, you can see the entry <a href="http://10k.aneventapart.com/2/Uploads/610/">here</a>.</p>
 
 <h2>How?</h2>
 <p>Just run the html file. Hopefully our bit.ly account is still working and the cdns for our js includes are up.
